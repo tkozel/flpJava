@@ -22,7 +22,7 @@ public class MainWindow extends JFrame {
 	private void initGui() {
 		FlCanvas canv =  new FlCanvas(800,600);
 		add(new JScrollPane(canv),BorderLayout.CENTER);
-		
+		new DrawingThread(canv).start();
 	}
 	
 	

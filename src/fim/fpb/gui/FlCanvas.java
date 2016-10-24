@@ -34,4 +34,8 @@ public class FlCanvas extends JComponent {
 		((Graphics2D)g).drawImage(img, 0, 0, this);
 	}
 	
+	public Graphics2D getGraph() {
+		return graph;
+	}
+	
 }
