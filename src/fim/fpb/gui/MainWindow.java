@@ -1,13 +1,20 @@
 package fim.fpb.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
+import fim.fpb.model.Direction;
+
 
 public class MainWindow extends JFrame {
 	
+	private DrawingThread drawingThread;
+
 	public MainWindow() {
 		super("Flappy Bird - sample game application");
 		
@@ -22,7 +29,29 @@ public class MainWindow extends JFrame {
 	private void initGui() {
 		FlCanvas canv =  new FlCanvas(800,600);
 		add(new JScrollPane(canv),BorderLayout.CENTER);
-		new DrawingThread(canv).start();
+		drawingThread = new DrawingThread(canv);
+		drawingThread.start();
+		
+		addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				Point p = drawingThread.getPos();
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_UP: drawingThread.moveDirection(Direction.UP);break;
+					case KeyEvent.VK_DOWN: drawingThread.moveDirection(Direction.DOWN);break;
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				Point p = drawingThread.getPos();
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_UP: 
+					case KeyEvent.VK_DOWN: drawingThread.moveDirection(Direction.STABLE);break;
+				}
+			}
+		});
 	}
 	
 	
